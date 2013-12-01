@@ -13,18 +13,18 @@ function saveDataStore() {
   return writeFile('data.json', JSON.stringify(dataStore, null, 2));
 }
 
-app.get('/media/:ns/:id', function(req, res) {
+app.get('/db/:ns/:id', function(req, res) {
     res.send(200, dataStore[req.params.ns] &&
              dataStore[req.params.ns][req.params.id]);
 });
 
-app.put('/media/:ns/:id', function(req, res) {
+app.put('/db/:ns/:id', function(req, res) {
     dataStore[req.params.ns] = dataStore[req.params.ns] || {};
     dataStore[req.params.ns][req.params.id] = req.body;
     saveDataStore().done(function() { res.send(201); });
 });
 
-app.delete('/media/:ns/:id', function(req, res) {
+app.delete('/db/:ns/:id', function(req, res) {
     dataStore[req.params.ns] &&
         delete dataStore[req.params.ns][req.params.id];
     saveDataStore().done(function() { res.send(204); });
