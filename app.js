@@ -5,7 +5,7 @@ var app = express();
 
 app.use(express.bodyParser());
 
-var dataStore = {};
+var dataStore = JSON.parse(fs.readFileSync('data.json', { encoding: 'utf-8' }));
 
 var writeFile = Q.denodeify(fs.writeFile);
 
