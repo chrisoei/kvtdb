@@ -28,6 +28,20 @@ app.get('/db/:ns/:id', function(req, res) {
              dataStore[req.params.ns][req.params.id]);
 });
 
+app.get('/db/:ns/:k/:v', function(req, res) {
+    var answer = [];
+    var subset = dataStore[req.params.ns];
+    if (subset) {
+        var keys = Object.keys(subset);
+        for (var i in keys) {
+            if (subset[keys[[i]]][req.params.k] == req.params.v) {
+                answer.push(keys[i]);
+            }
+        }
+    }
+    res.send(200, answer);
+});
+
 app.put('/db/:ns/:id', function(req, res) {
     dataStore[req.params.ns] = dataStore[req.params.ns] || {};
     dataStore[req.params.ns][req.params.id] = req.body;
