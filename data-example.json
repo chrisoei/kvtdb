@@ -1,0 +1,136 @@
+{
+  "mime-type": {
+    "aac": {
+      "Content-Type": "audio/aac"
+    },
+    "ai": {
+      "Content-Type": "application/postscript"
+    },
+    "avi": {
+      "Content-Type": "video/avi"
+    },
+    "flac": {
+      "Content-Type": "audio/flac"
+    },
+    "bash": {
+      "Content-Type": "text/plain"
+    },
+    "html": {
+      "Content-Type": "text/html"
+    },
+    "woff": {
+      "Content-Type": "application/font-woff"
+    },
+    "svg": {
+      "Content-Type": "image/svg+xml"
+    },
+    "js": {
+      "Content-Type": "application/javascript"
+    },
+    "docx": {
+      "Content-Type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    },
+    "jpeg": {
+      "Content-Type": "image/jpeg"
+    },
+    "tar": {
+      "Content-Type": "application/x-tar"
+    },
+    "asc": {
+      "Content-Type": "text/plain"
+    },
+    "ps": {
+      "Content-Type": "application/postscript"
+    },
+    "webp": {
+      "Content-Type": "image/webp"
+    },
+    "pdf": {
+      "Content-Type": "application/pdf"
+    },
+    "txt": {
+      "Content-Type": "text/plain"
+    },
+    "opus": {
+      "Content-Type": "audio/ogg"
+    },
+    "gif": {
+      "Content-Type": "image/gif"
+    },
+    "png": {
+      "Content-Type": "image/png"
+    },
+    "vcf": {
+      "Content-Type": "text/vcard"
+    },
+    "css": {
+      "Content-Type": "text/css"
+    },
+    "mp3": {
+      "Content-Type": "audio/mpeg"
+    },
+    "mpg": {
+      "Content-Type": "video/mpeg"
+    },
+    "mpeg": {
+      "Content-Type": "video/mpeg"
+    },
+    "mkv": {
+      "Content-Type": "video/mp4"
+    },
+    "md": {
+      "Content-Type": "text/x-markdown"
+    },
+    "tif": {
+      "Content-Type": "image/tiff"
+    },
+    "cbz": {
+      "Content-Type": "application/x-cbz"
+    },
+    "otf": {
+      "Content-Type": "font/opentype"
+    },
+    "sh": {
+      "Content-Type": "text/plain"
+    },
+    "webm": {
+      "Content-Type": "video/webm"
+    },
+    "flv": {
+      "Content-Type": "video/x-flv"
+    },
+    "cbr": {
+      "Content-Type": "application/x-cbr"
+    },
+    "zip": {
+      "Content-Type": "application/zip"
+    },
+    "tiff": {
+      "Content-Type": "image/tiff"
+    },
+    "wmv": {
+      "Content-Type": "video/x-ms-wmv"
+    },
+    "xlsx": {
+      "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    },
+    "jpg": {
+      "Content-Type": "image/jpeg"
+    },
+    "ttf": {
+      "Content-Type": "font/ttf"
+    },
+    "json": {
+      "Content-Type": "application/json"
+    },
+    "htm": {
+      "Content-Type": "text/html"
+    },
+    "mp4": {
+      "Content-Type": "video/mp4"
+    },
+    "epub": {
+      "Content-Type": "application/epub+zip"
+    }
+  }
+}
