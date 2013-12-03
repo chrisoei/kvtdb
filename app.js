@@ -55,6 +55,15 @@ app.put('/db/:ns/:id', function(req, res) {
     res.send(202);
 });
 
+app.put('/db/:ns/:id/:k', function(req, res) {
+    dataStore[req.params.ns] = dataStore[req.params.ns] || {};
+    dataStore[req.params.ns][req.params.id] =
+        dataStore[req.params.ns][req.params.id] || {}
+    dataStore[req.params.ns][req.params.id][req.params.k] = req.body
+    saveDataStore();
+    res.send(202);
+});
+
 app.delete('/db/:ns/:id', function(req, res) {
     dataStore[req.params.ns] &&
         delete dataStore[req.params.ns][req.params.id];
