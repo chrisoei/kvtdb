@@ -44,6 +44,8 @@
     "htm": "text/html",
     "mp4": "video/mp4",
     "epub": "application/epub+zip",
-    "coffee": "text/x-coffeescript"
+    "coffee": "text/x-coffeescript",
+    "m4v": "video/mp4",
+    "wma": "audio/x-ms-wma"
   }
 }
