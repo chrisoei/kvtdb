@@ -3,7 +3,9 @@ var Q = require('q');
 var express = require('express');
 var app = express();
 
-app.use(express.bodyParser());
+app.use(express.json({ strict: false }));
+app.use(express.urlencoded());
+
 
 var dataStore = JSON.parse(fs.readFileSync('data.json', { encoding: 'utf-8' }));
 
