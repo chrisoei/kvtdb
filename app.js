@@ -1,3 +1,4 @@
+var assert = require('assert');
 var fs = require('fs');
 var Q = require('q');
 var express = require('express');
@@ -57,6 +58,24 @@ app.get('/db/keys/*', function(req, res, next) {
         result = result[d];
     }
     res.json(Object.keys(result));
+});
+
+app.get('/db/search/*', function(req, res, next) {
+    var result = [];
+    var ptr = dataStore;
+    var path = req.params[0].split('/');
+    var searchValue = path.pop();
+    assert(path.pop() === '*', 'Search field should be an asterisk');
+    while ((d = path.shift()) && ptr) {
+        ptr = ptr[d];
+    }
+    var possibleKeys = Object.keys(ptr);
+    for (var i = 0; i < possibleKeys.length; i++) {
+        if (ptr[possibleKeys[i]] == searchValue) {
+            result.push(possibleKeys[i]);
+        }
+    }
+    res.json(result);
 });
 
 app.put('/db/set/*', function(req, res, next) {
