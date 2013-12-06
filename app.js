@@ -51,7 +51,6 @@ app.get('/db/get/*', function(req, res, next) {
 });
 
 app.put('/db/set/*', function(req, res, next) {
-    console.log(req);
     var ptr = dataStore;
     var path = req.params[0].split('/');
     var last = path.pop();
@@ -67,7 +66,6 @@ app.put('/db/set/*', function(req, res, next) {
 });
 
 app.delete('/db/*', function(req, res) {
-    console.log(req);
     var ptr = dataStore;
     var path = req.params[0].split('/');
     var last = path.pop();
