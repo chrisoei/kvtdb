@@ -37,43 +37,29 @@ app.all('/*', function(req, res, next) {
     next();
 });
 
-app.get('/db/:ns', function(req, res) {
-    res.send(200, dataStore[req.params.ns]);
-});
-
-app.get('/db/:ns/:id', function(req, res) {
-    res.send(200, dataStore[req.params.ns] &&
-             dataStore[req.params.ns][req.params.id]);
-});
-
-app.get('/db/:ns/:k/:v', function(req, res) {
-    var answer = [];
-    var subset = dataStore[req.params.ns];
-    if (subset) {
-        var keys = Object.keys(subset);
-        for (var i in keys) {
-            if (subset[keys[[i]]][req.params.k] == req.params.v) {
-                answer.push(keys[i]);
-            }
-        }
+app.get('/db/get/*', function(req, res, next) {
+    var result = dataStore;
+    var path = req.params[0].split('/');
+    while ((d = path.shift()) && result) {
+        result = result[d];
     }
-    res.send(200, answer);
+   res.json(result);
 });
 
-app.put('/db/:ns/:id', function(req, res) {
-    dataStore[req.params.ns] = dataStore[req.params.ns] || {};
-    dataStore[req.params.ns][req.params.id] = req.body;
+app.put('/db/set/*', function(req, res, next) {
+   console.log(req);
+    var ptr = dataStore;
+    var path = req.params[0].split('/');
+    var last = path.pop();
+    while ((d = path.shift())) {
+        if (typeof ptr[d] !== 'object') {
+            ptr[d] = {};
+        }
+        ptr = ptr[d];
+    }
+    ptr[last] = req.body;
     saveDataStore();
-    res.send(202);
-});
-
-app.put('/db/:ns/:id/:k', function(req, res) {
-    dataStore[req.params.ns] = dataStore[req.params.ns] || {};
-    dataStore[req.params.ns][req.params.id] =
-        dataStore[req.params.ns][req.params.id] || {};
-    dataStore[req.params.ns][req.params.id][req.params.k] = req.body;
-    saveDataStore();
-    res.send(202);
+   res.send(202);
 });
 
 app.delete('/db/:ns/:id', function(req, res) {
