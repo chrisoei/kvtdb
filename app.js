@@ -37,6 +37,10 @@ app.all('/*', function(req, res, next) {
     next();
 });
 
+app.get('/db/:ns', function(req, res) {
+    res.send(200, dataStore[req.params.ns]);
+});
+
 app.get('/db/:ns/:id', function(req, res) {
     res.send(200, dataStore[req.params.ns] &&
              dataStore[req.params.ns][req.params.id]);
@@ -79,5 +83,5 @@ app.delete('/db/:ns/:id', function(req, res) {
     res.send(202);
 });
 
-app.listen(63446);
-console.log('Listening on port 63446');
+app.listen(3446);
+console.log('Listening on port 3446');
