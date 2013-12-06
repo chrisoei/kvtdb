@@ -6,8 +6,13 @@ var app = express();
 app.use(express.json({ strict: false }));
 app.use(express.urlencoded());
 
+var dataStore;
 
-var dataStore = JSON.parse(fs.readFileSync('data.json', { encoding: 'utf-8' }));
+if (fs.existsSync('data.json')) {
+    dataStore = JSON.parse(fs.readFileSync('data.json', { encoding: 'utf-8' }));
+} else {
+    dataStore = {};
+}
 
 var dbVersion = 0;
 
