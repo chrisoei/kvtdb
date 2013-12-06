@@ -50,6 +50,15 @@ app.get('/db/get/*', function(req, res, next) {
     res.json(result);
 });
 
+app.get('/db/keys/*', function(req, res, next) {
+    var result = dataStore;
+    var path = req.params[0].split('/');
+    while ((d = path.shift()) && result) {
+        result = result[d];
+    }
+    res.json(Object.keys(result));
+});
+
 app.put('/db/set/*', function(req, res, next) {
     var ptr = dataStore;
     var path = req.params[0].split('/');
