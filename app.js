@@ -37,7 +37,7 @@ function saveDataStore() {
 app.all('/*', function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'X-Requested-With');
-    res.header('Access-Control-Allow-Methods', 'PUT, DELETE');
+    res.header('Access-Control-Allow-Methods', 'PUT, DELETE, OPTIONS');
     next();
 });
 
@@ -66,9 +66,18 @@ app.put('/db/set/*', function(req, res, next) {
     res.send(202);
 });
 
-app.delete('/db/:ns/:id', function(req, res) {
-    dataStore[req.params.ns] &&
-        delete dataStore[req.params.ns][req.params.id];
+app.delete('/db/*', function(req, res) {
+    console.log(req);
+    var ptr = dataStore;
+    var path = req.params[0].split('/');
+    var last = path.pop();
+    while ((d = path.shift())) {
+        if (typeof ptr[d] !== 'object') {
+            ptr[d] = {};
+        }
+        ptr = ptr[d];
+    }
+    delete ptr[last];
     saveDataStore();
     res.send(202);
 });
