@@ -73,7 +73,8 @@ app.delete('/db/*', function(req, res) {
     var last = path.pop();
     while ((d = path.shift())) {
         if (typeof ptr[d] !== 'object') {
-            ptr[d] = {};
+            res.send(202);
+            return;
         }
         ptr = ptr[d];
     }
