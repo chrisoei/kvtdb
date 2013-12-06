@@ -3,13 +3,17 @@ var Q = require('q');
 var express = require('express');
 var app = express();
 
-app.use(express.json({ strict: false }));
+app.use(express.json({
+    strict: false
+}));
 app.use(express.urlencoded());
 
 var dataStore;
 
 if (fs.existsSync('data.json')) {
-    dataStore = JSON.parse(fs.readFileSync('data.json', { encoding: 'utf-8' }));
+    dataStore = JSON.parse(fs.readFileSync('data.json', {
+        encoding: 'utf-8'
+    }));
 } else {
     dataStore = {};
 }
@@ -43,11 +47,11 @@ app.get('/db/get/*', function(req, res, next) {
     while ((d = path.shift()) && result) {
         result = result[d];
     }
-   res.json(result);
+    res.json(result);
 });
 
 app.put('/db/set/*', function(req, res, next) {
-   console.log(req);
+    console.log(req);
     var ptr = dataStore;
     var path = req.params[0].split('/');
     var last = path.pop();
@@ -59,7 +63,7 @@ app.put('/db/set/*', function(req, res, next) {
     }
     ptr[last] = req.body;
     saveDataStore();
-   res.send(202);
+    res.send(202);
 });
 
 app.delete('/db/:ns/:id', function(req, res) {
