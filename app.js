@@ -5,9 +5,13 @@ var express = require('express');
 var app = express();
 
 app.use(express.json({
-    strict: false
+    strict: false,
+    limit: '50mb'
 }));
-app.use(express.urlencoded());
+
+app.use(express.urlencoded({
+    limit: '50mb'
+}));
 
 var dataStore;
 
