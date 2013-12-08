@@ -53,9 +53,12 @@ app.get('/db/get/*', function(req, res, next) {
         result = result[d];
     }
     if (req.query) {
-        if (req.query['Content-Type']) {
-            res.header('Content-Type', req.query['Content-Type']);
-        }
+        _.forEach([ 'Content-Type', 'Cache-Control', 'Expires' ], function(h) {
+            if (req.query[h]) {
+                res.header(h, req.query[h]);
+            }
+        });
+
         res.send(200, result);
     } else {
         res.json(result);
