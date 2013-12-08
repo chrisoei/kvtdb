@@ -48,7 +48,14 @@ app.get('/db/get/*', function(req, res, next) {
     while ((d = path.shift()) && result) {
         result = result[d];
     }
-    res.json(result);
+    if (req.query) {
+        if (req.query['Content-Type']) {
+            res.header('Content-Type', req.query['Content-Type']);
+        }
+        res.send(200, result);
+    } else {
+        res.json(result);
+    }
 });
 
 app.get('/db/keys/*', function(req, res, next) {
