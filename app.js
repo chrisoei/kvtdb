@@ -120,6 +120,9 @@ app.put('/db/push/*', function(req, res, next) {
     }
     ptr[last] = ptr[last] || [];
     ptr[last].push(req.body);
+    if (req.query.unique) {
+        ptr[last] = _.uniq(ptr[last]);
+    }
     saveDataStore();
     res.send(202);
 });
