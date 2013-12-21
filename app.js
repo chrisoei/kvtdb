@@ -108,7 +108,7 @@ app.put('/db/set/*', function(req, res, next) {
     res.send(202);
 });
 
-app.delete('/db/*', function(req, res) {
+app.delete('/db/del/*', function(req, res) {
     var ptr = dataStore;
     var path = req.params[0].split('/');
     var last = path.pop();
