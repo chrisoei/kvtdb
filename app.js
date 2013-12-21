@@ -108,6 +108,22 @@ app.put('/db/set/*', function(req, res, next) {
     res.send(202);
 });
 
+app.put('/db/push/*', function(req, res, next) {
+    var ptr = dataStore;
+    var path = req.params[0].split('/');
+    var last = path.pop();
+    while ((d = path.shift())) {
+        if (typeof ptr[d] !== 'object') {
+            ptr[d] = {};
+        }
+        ptr = ptr[d];
+    }
+    ptr[last] = ptr[last] || [];
+    ptr[last].push(req.body);
+    saveDataStore();
+    res.send(202);
+});
+
 app.delete('/db/del/*', function(req, res) {
     var ptr = dataStore;
     var path = req.params[0].split('/');
