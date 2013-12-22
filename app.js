@@ -77,16 +77,21 @@ app.get('/db/keys/*', function(req, res, next) {
 
 app.get('/db/search/*', function(req, res, next) {
     var result = [];
-    var ptr = dataStore;
+    var ptr1 = dataStore;
     var path = req.params[0].split('/');
     var searchValue = path.pop();
-    assert(path.pop() === '*', 'Search field should be an asterisk');
-    while ((d = path.shift()) && ptr) {
-        ptr = ptr[d];
+    var star = path.indexOf('*');
+    assert(star >= 0, 'Search field should be an asterisk');
+    for (var j = 0; j < star; j++) {
+      ptr1 = ptr1[path[j]] || {};
     }
-    var possibleKeys = Object.keys(ptr);
+    var possibleKeys = Object.keys(ptr1);
     for (var i = 0; i < possibleKeys.length; i++) {
-        if (ptr[possibleKeys[i]] == searchValue) {
+        var ptr2 = ptr1;
+        for (j = star + 1; j < path.length; j++) {
+            ptr2 = ptr2[path[j]];
+        }
+        if (ptr2[possibleKeys[i]] == searchValue) {
             result.push(possibleKeys[i]);
         }
     }
