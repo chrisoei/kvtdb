@@ -87,12 +87,18 @@ app.get('/db/search/*', function(req, res, next) {
     }
     var possibleKeys = Object.keys(ptr1);
     for (var i = 0; i < possibleKeys.length; i++) {
-        var ptr2 = ptr1;
+        var ptr2 = ptr1[possibleKeys[i]] || {};
         for (j = star + 1; j < path.length; j++) {
-            ptr2 = ptr2[path[j]];
+            ptr2 = ptr2[path[j]] || {};
         }
-        if (ptr2[possibleKeys[i]] == searchValue) {
-            result.push(possibleKeys[i]);
+        if (ptr2 instanceof Array) {
+            if (ptr2.indexOf(searchValue) >= 0) {
+                result.push(possibleKeys[i]);
+            }
+        } else {
+            if (ptr2 == searchValue) {
+                result.push(possibleKeys[i]);
+            }
         }
     }
     res.json(result);
