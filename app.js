@@ -28,6 +28,27 @@ var dbVersion = 0;
 
 var writeFile = Q.denodeify(fs.writeFile);
 
+
+function starDate(dt) {
+    var d = dt || new Date();
+    var y = d.getUTCFullYear();
+    var t0 = Date.UTC(y, 0, 1, 0, 0, 0, 0);
+    var t1 = Date.UTC(y + 1, 0, 1, 0, 0, 0, 0);
+    var t = Date.UTC(
+        y,
+        d.getUTCMonth(),
+        d.getUTCDate(),
+        d.getUTCHours(),
+        d.getUTCMinutes(),
+        d.getUTCSeconds(),
+        d.getUTCMilliseconds());
+    var sd = y + (t - t0) / (t1 - t0);
+    return {
+        "canonical": sd.toFixed(15),
+        "short": sd.toFixed(3)
+    };
+}
+
 function saveDataStore() {
     var myVersion = ++dbVersion;
     setTimeout(function() {
@@ -102,6 +123,13 @@ app.get('/db/search/*', function(req, res, next) {
         }
     }
     res.json(result);
+});
+
+app.post('/db/snapshot', function(req, res, next) {
+    var sd = starDate().canonical;
+    console.log('Snapshotting ' + dbVersion + ' at ' + sd);
+    writeFile('data-' + sd + '.json', JSON.stringify(dataStore, null, 2));
+    res.send(202);
 });
 
 app.put('/db/set/*', function(req, res, next) {
