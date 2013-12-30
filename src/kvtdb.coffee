@@ -26,16 +26,7 @@ if fs.existsSync('data.json')
   ))
 
 dbVersion = 0
-programVersion = 'unknown'
-
-child_process.execFile 'git', [ 'describe', '--always', '--dirty' ], null,
-  (err, stdout, stderr) ->
-    if err?
-      console.error err
-      console.error stderr
-      process.exit 1
-    else
-      programVersion = stdout
+programVersion = '0.0.4'
 
 saveDataStore = ->
   myVersion = ++dbVersion
