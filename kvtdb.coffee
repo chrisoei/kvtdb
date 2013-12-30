@@ -1,5 +1,6 @@
 _ = require 'lodash'
 assert = require 'assert'
+child_process = require "child_process"
 fs = require 'fs'
 express = require 'express'
 
@@ -20,6 +21,16 @@ if fs.existsSync('data.json')
   ))
 
 dbVersion = 0
+programVersion = 'unknown'
+
+child_process.execFile 'git', [ 'describe', '--always', '--dirty' ], null,
+  (err, stdout, stderr) ->
+    if err?
+      console.error err
+      console.error stderr
+      process.exit 1
+    else
+      programVersion = stdout
 
 starDate = (dt) ->
   d = dt or new Date()
@@ -54,8 +65,9 @@ saveDataStore = ->
 app.all '/*', (req, res, next) ->
   res.header 'Access-Control-Allow-Origin', '*'
   res.header 'Access-Control-Allow-Headers',
-    'X-Requested-With, Content-Type, Cache-Control, Expires'
+    'X-Requested-With, Content-Type, Cache-Control, Expires, X-KVTDB-Version'
   res.header 'Access-Control-Allow-Methods', 'PUT, POST, DELETE, OPTIONS'
+  res.header 'X-KVTDB-Version', programVersion
   next()
 
 app.get '/db/get/*', (req, res, next) ->
