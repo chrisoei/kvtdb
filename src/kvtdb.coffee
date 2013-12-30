@@ -1,3 +1,5 @@
+#!/usr/bin/env coffee
+#
 _ = require 'lodash'
 assert = require 'assert'
 child_process = require 'child_process'
@@ -153,5 +155,8 @@ app.delete '/db/del/*', (req, res) ->
   saveDataStore()
   res.send 202
 
-app.listen 63446
-console.log 'Listening on port 63446'
+module.exports = {
+    run: ->
+        app.listen 63446
+        console.log 'Listening on port 63446'
+}

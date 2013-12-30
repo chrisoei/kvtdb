@@ -1,7 +1,7 @@
 {
     "name": "kvtdb",
     "description": "Key-Value Tree Database",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "dependencies": {
         "coffee-script": "1.x",
         "express": "3.x",
@@ -11,10 +11,10 @@
     "devDependencies": {
         "coffee-script": "1.x"
     },
-    "bin": { "kvtdb": "bin/kvtdb.js"},
+    "bin": { "kvtdb": "bin/kvtdb"},
     "scripts": {
-        "build":        "coffee --bare --compile --output bin src/kvtdb.coffee",
-        "prepublish":   "coffee --bare --compile --output bin src/kvtdb.coffee"
+        "build":        "coffee --bare --compile --output lib src/kvtdb.coffee",
+        "prepublish":   "coffee --bare --compile --output lib src/kvtdb.coffee"
     }
 }
 
