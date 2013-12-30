@@ -1,8 +1,8 @@
 _ = require 'lodash'
 assert = require 'assert'
 child_process = require 'child_process'
-fs = require 'fs'
 express = require 'express'
+fs = require 'fs'
 
 app = express()
 
