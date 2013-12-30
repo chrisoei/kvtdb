@@ -1,7 +1,6 @@
 _ = require 'lodash'
 assert = require 'assert'
 fs = require 'fs'
-Q = require 'q'
 express = require 'express'
 
 app = express()
@@ -21,7 +20,6 @@ if fs.existsSync('data.json')
   ))
 
 dbVersion = 0
-writeFile = Q.denodeify(fs.writeFile)
 
 starDate = (dt) ->
   d = dt or new Date()
@@ -44,7 +42,7 @@ saveDataStore = ->
   setTimeout (->
     if myVersion is dbVersion
       console.log 'Writing version ' + myVersion
-      writeFile 'data.json', JSON.stringify(dataStore, null, 2)
+      fs.writeFile 'data.json', JSON.stringify(dataStore, null, 2)
     else
       console.log [
           'My version = ',
@@ -105,7 +103,7 @@ app.get '/db/search/*', (req, res, next) ->
 app.post '/db/snapshot', (req, res, next) ->
   sd = starDate().canonical
   console.log 'Snapshotting ' + dbVersion + ' at ' + sd
-  writeFile 'data-' + sd + '.json', JSON.stringify(dataStore, null, 2)
+  fs.writeFile 'data-' + sd + '.json', JSON.stringify(dataStore, null, 2)
   res.send 202
 
 app.put '/db/set/*', (req, res, next) ->
