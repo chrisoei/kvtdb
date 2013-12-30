@@ -1,22 +1,23 @@
-_ = require("lodash")
-assert = require("assert")
-fs = require("fs")
-Q = require("q")
-express = require("express")
+_ = require 'lodash'
+assert = require 'assert'
+fs = require 'fs'
+Q = require 'q'
+express = require 'express'
+
 app = express()
 
 app.use express.json(
   strict: false
-  limit: "50mb"
+  limit: '50mb'
 )
 
-app.use express.urlencoded(limit: "50mb")
+app.use express.urlencoded(limit: '50mb')
 
 dataStore = {}
 
-if fs.existsSync("data.json")
-  dataStore = JSON.parse(fs.readFileSync("data.json",
-    encoding: "utf-8"
+if fs.existsSync('data.json')
+  dataStore = JSON.parse(fs.readFileSync('data.json',
+    encoding: 'utf-8'
   ))
 
 dbVersion = 0
@@ -42,32 +43,32 @@ saveDataStore = ->
   myVersion = ++dbVersion
   setTimeout (->
     if myVersion is dbVersion
-      console.log "Writing version " + myVersion
-      writeFile "data.json", JSON.stringify(dataStore, null, 2)
+      console.log 'Writing version ' + myVersion
+      writeFile 'data.json', JSON.stringify(dataStore, null, 2)
     else
       console.log [
-          "My version = ",
+          'My version = ',
           myVersion,
-          " but latest is ",
+          ' but latest is ',
           dbVersion ].join('')
   ), 3000
 
-app.all "/*", (req, res, next) ->
-  res.header "Access-Control-Allow-Origin", "*"
-  res.header "Access-Control-Allow-Headers",
-    "X-Requested-With, Content-Type, Cache-Control, Expires"
-  res.header "Access-Control-Allow-Methods", "PUT, DELETE, OPTIONS"
+app.all '/*', (req, res, next) ->
+  res.header 'Access-Control-Allow-Origin', '*'
+  res.header 'Access-Control-Allow-Headers',
+    'X-Requested-With, Content-Type, Cache-Control, Expires'
+  res.header 'Access-Control-Allow-Methods', 'PUT, DELETE, OPTIONS'
   next()
 
-app.get "/db/get/*", (req, res, next) ->
+app.get '/db/get/*', (req, res, next) ->
   result = dataStore
-  path = req.params[0].split("/")
+  path = req.params[0].split('/')
   result = result[d]  while (d = path.shift()) and result
   if req.query
     for h in [
-      "Content-Type"
-      "Cache-Control"
-      "Expires"
+      'Content-Type'
+      'Cache-Control'
+      'Expires'
     ]
       res.header h, req.query[h]  if req.query[h]
 
@@ -75,19 +76,19 @@ app.get "/db/get/*", (req, res, next) ->
   else
     res.json result
 
-app.get "/db/keys/*", (req, res, next) ->
+app.get '/db/keys/*', (req, res, next) ->
   result = dataStore
-  path = req.params[0].split("/")
+  path = req.params[0].split('/')
   result = result[d]  while (d = path.shift()) and result
   res.json Object.keys(result)
 
-app.get "/db/search/*", (req, res, next) ->
+app.get '/db/search/*', (req, res, next) ->
   result = []
   ptr1 = dataStore
-  path = req.params[0].split("/")
+  path = req.params[0].split('/')
   searchValue = path.pop()
-  star = path.indexOf("*")
-  assert star >= 0, "Search field should be an asterisk"
+  star = path.indexOf('*')
+  assert star >= 0, 'Search field should be an asterisk'
   for j in [0...star]
     ptr1 = ptr1[path[j]] or {}
   possibleKeys = Object.keys(ptr1)
@@ -101,29 +102,29 @@ app.get "/db/search/*", (req, res, next) ->
       result.push possibleKeys[i]  if ptr2 is searchValue
   res.json result
 
-app.post "/db/snapshot", (req, res, next) ->
+app.post '/db/snapshot', (req, res, next) ->
   sd = starDate().canonical
-  console.log "Snapshotting " + dbVersion + " at " + sd
-  writeFile "data-" + sd + ".json", JSON.stringify(dataStore, null, 2)
+  console.log 'Snapshotting ' + dbVersion + ' at ' + sd
+  writeFile 'data-' + sd + '.json', JSON.stringify(dataStore, null, 2)
   res.send 202
 
-app.put "/db/set/*", (req, res, next) ->
+app.put '/db/set/*', (req, res, next) ->
   ptr = dataStore
-  path = req.params[0].split("/")
+  path = req.params[0].split('/')
   last = path.pop()
   while (d = path.shift())
-    ptr[d] = {}  if typeof ptr[d] isnt "object"
+    ptr[d] = {}  if typeof ptr[d] isnt 'object'
     ptr = ptr[d]
   ptr[last] = req.body
   saveDataStore()
   res.send 202
 
-app.put "/db/push/*", (req, res, next) ->
+app.put '/db/push/*', (req, res, next) ->
   ptr = dataStore
-  path = req.params[0].split("/")
+  path = req.params[0].split('/')
   last = path.pop()
   while (d = path.shift())
-    ptr[d] = {}  if typeof ptr[d] isnt "object"
+    ptr[d] = {}  if typeof ptr[d] isnt 'object'
     ptr = ptr[d]
   ptr[last] = ptr[last] or []
   ptr[last].push req.body
@@ -131,12 +132,12 @@ app.put "/db/push/*", (req, res, next) ->
   saveDataStore()
   res.send 202
 
-app.delete "/db/del/*", (req, res) ->
+app.delete '/db/del/*', (req, res) ->
   ptr = dataStore
-  path = req.params[0].split("/")
+  path = req.params[0].split('/')
   last = path.pop()
   while d = path.shift()
-    if typeof ptr[d] isnt "object"
+    if typeof ptr[d] isnt 'object'
       res.send 202
       return
     ptr = ptr[d]
@@ -145,4 +146,4 @@ app.delete "/db/del/*", (req, res) ->
   res.send 202
 
 app.listen 63446
-console.log "Listening on port 63446"
+console.log 'Listening on port 63446'
