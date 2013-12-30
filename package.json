@@ -8,5 +8,14 @@
         "express": "3.x",
         "lodash": "2.x",
         "stardate": "x"
+    },
+    "devDependencies": {
+        "coffee-script": "1.x"
+    },
+    "bin": { "kvtdb": "bin/kvtdb.js"},
+    "scripts": {
+        "build":        "coffee --bare --compile --output bin src/kvtdb.coffee",
+        "prepublish":   "coffee --bare --compile --output bin src/kvtdb.coffee"
     }
 }
+
