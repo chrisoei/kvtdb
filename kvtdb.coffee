@@ -58,10 +58,11 @@ saveDataStore = ->
       fs.writeFile 'data.json', JSON.stringify(dataStore, null, 2)
     else
       console.log [
-          'My version = ',
-          myVersion,
-          ' but latest is ',
-          dbVersion ].join('')
+          'My version = '
+          myVersion
+          ' but latest is '
+          dbVersion
+      ].join('')
   ), 3000
 
 app.all '/*', (req, res, next) ->
