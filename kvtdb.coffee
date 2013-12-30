@@ -3,6 +3,7 @@ assert = require 'assert'
 child_process = require 'child_process'
 express = require 'express'
 fs = require 'fs'
+StarDate = require './stardate'
 
 app = express()
 
@@ -33,22 +34,6 @@ child_process.execFile 'git', [ 'describe', '--always', '--dirty' ], null,
       process.exit 1
     else
       programVersion = stdout
-
-starDate = (dt) ->
-  d = dt or new Date()
-  y = d.getUTCFullYear()
-  t0 = Date.UTC(y, 0, 1, 0, 0, 0, 0)
-  t1 = Date.UTC(y + 1, 0, 1, 0, 0, 0, 0)
-  t = Date.UTC(y,
-    d.getUTCMonth(),
-    d.getUTCDate(),
-    d.getUTCHours(),
-    d.getUTCMinutes(),
-    d.getUTCSeconds(),
-    d.getUTCMilliseconds())
-  sd = y + (t - t0) / (t1 - t0)
-  canonical: sd.toFixed(15)
-  short: sd.toFixed(3)
 
 saveDataStore = ->
   myVersion = ++dbVersion
@@ -126,7 +111,7 @@ app.get '/db/search/*', (req, res, next) ->
   res.json result
 
 app.post '/db/snapshot', (req, res, next) ->
-  sd = starDate().canonical
+  sd = new StarDate().canonical()
   console.log 'Snapshotting ' + dbVersion + ' at ' + sd
   fs.writeFile 'data-' + sd + '.json', JSON.stringify(dataStore, null, 2)
   res.send 202
