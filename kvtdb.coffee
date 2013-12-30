@@ -64,9 +64,19 @@ saveDataStore = ->
 
 app.all '/*', (req, res, next) ->
   res.header 'Access-Control-Allow-Origin', '*'
-  res.header 'Access-Control-Allow-Headers',
-    'X-Requested-With, Content-Type, Cache-Control, Expires, X-KVTDB-Version'
-  res.header 'Access-Control-Allow-Methods', 'PUT, POST, DELETE, OPTIONS'
+  res.header 'Access-Control-Allow-Headers', [
+    'Cache-Control'
+    'Content-Type'
+    'Expires'
+    'X-KVTDB-Version'
+    'X-Requested-With'
+  ].join(', ')
+  res.header 'Access-Control-Allow-Methods', [
+    'DELETE'
+    'OPTIONS'
+    'POST'
+    'PUT'
+  ].join(', ')
   res.header 'X-KVTDB-Version', programVersion
   next()
 
