@@ -1,6 +1,6 @@
 _ = require 'lodash'
 assert = require 'assert'
-child_process = require "child_process"
+child_process = require 'child_process'
 fs = require 'fs'
 express = require 'express'
 
@@ -134,7 +134,7 @@ app.put '/db/set/*', (req, res, next) ->
   ptr = dataStore
   path = req.params[0].split('/')
   last = path.pop()
-  while (d = path.shift())
+  while d = path.shift()
     ptr[d] = {}  if typeof ptr[d] isnt 'object'
     ptr = ptr[d]
   ptr[last] = req.body
@@ -145,7 +145,7 @@ app.put '/db/push/*', (req, res, next) ->
   ptr = dataStore
   path = req.params[0].split('/')
   last = path.pop()
-  while (d = path.shift())
+  while d = path.shift()
     ptr[d] = {}  if typeof ptr[d] isnt 'object'
     ptr = ptr[d]
   ptr[last] = ptr[last] or []
