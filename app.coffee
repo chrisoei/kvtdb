@@ -63,11 +63,11 @@ app.get "/db/get/*", (req, res, next) ->
   path = req.params[0].split("/")
   result = result[d]  while (d = path.shift()) and result
   if req.query
-    _.forEach [
+    for h in [
       "Content-Type"
       "Cache-Control"
       "Expires"
-    ], (h) ->
+    ]
       res.header h, req.query[h]  if req.query[h]
 
     res.send 200, result
@@ -140,6 +140,8 @@ app.delete "/db/del/*", (req, res) ->
       return
     ptr = ptr[d]
   delete ptr[last]
+  saveDataStore()
+  res.send 202
 
 app.listen 63446
 console.log "Listening on port 63446"
