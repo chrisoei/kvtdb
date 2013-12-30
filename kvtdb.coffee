@@ -6,6 +6,8 @@ express = require 'express'
 
 app = express()
 
+app.disable 'x-powered-by'
+
 app.use express.json(
   strict: false
   limit: '50mb'
