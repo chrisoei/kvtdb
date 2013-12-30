@@ -57,7 +57,7 @@ app.all '/*', (req, res, next) ->
   res.header 'Access-Control-Allow-Origin', '*'
   res.header 'Access-Control-Allow-Headers',
     'X-Requested-With, Content-Type, Cache-Control, Expires'
-  res.header 'Access-Control-Allow-Methods', 'PUT, DELETE, OPTIONS'
+  res.header 'Access-Control-Allow-Methods', 'PUT, POST, DELETE, OPTIONS'
   next()
 
 app.get '/db/get/*', (req, res, next) ->
