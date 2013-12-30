@@ -3,7 +3,7 @@ assert = require 'assert'
 child_process = require 'child_process'
 express = require 'express'
 fs = require 'fs'
-StarDate = require './stardate'
+StarDate = require 'stardate'
 
 app = express()
 
