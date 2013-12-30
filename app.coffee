@@ -12,14 +12,12 @@ app.use express.json(
 
 app.use express.urlencoded(limit: "50mb")
 
-dataStore = undefined
+dataStore = {}
 
 if fs.existsSync("data.json")
   dataStore = JSON.parse(fs.readFileSync("data.json",
     encoding: "utf-8"
   ))
-else
-  dataStore = {}
 
 dbVersion = 0
 writeFile = Q.denodeify(fs.writeFile)
@@ -29,7 +27,13 @@ starDate = (dt) ->
   y = d.getUTCFullYear()
   t0 = Date.UTC(y, 0, 1, 0, 0, 0, 0)
   t1 = Date.UTC(y + 1, 0, 1, 0, 0, 0, 0)
-  t = Date.UTC(y, d.getUTCMonth(), d.getUTCDate(), d.getUTCHours(), d.getUTCMinutes(), d.getUTCSeconds(), d.getUTCMilliseconds())
+  t = Date.UTC(y,
+    d.getUTCMonth(),
+    d.getUTCDate(),
+    d.getUTCHours(),
+    d.getUTCMinutes(),
+    d.getUTCSeconds(),
+    d.getUTCMilliseconds())
   sd = y + (t - t0) / (t1 - t0)
   canonical: sd.toFixed(15)
   short: sd.toFixed(3)
@@ -41,7 +45,11 @@ saveDataStore = ->
       console.log "Writing version " + myVersion
       writeFile "data.json", JSON.stringify(dataStore, null, 2)
     else
-      console.log "My version = " + myVersion + " but latest is " + dbVersion
+      console.log [
+          "My version = ",
+          myVersion,
+          " but latest is ",
+          dbVersion ].join('')
   ), 3000
 
 app.all "/*", (req, res, next) ->
@@ -79,25 +87,17 @@ app.get "/db/search/*", (req, res, next) ->
   searchValue = path.pop()
   star = path.indexOf("*")
   assert star >= 0, "Search field should be an asterisk"
-  j = 0
-
-  while j < star
+  for j in [0...star]
     ptr1 = ptr1[path[j]] or {}
-    j++
   possibleKeys = Object.keys(ptr1)
-  i = 0
-
-  while i < possibleKeys.length
+  for i in [0...possibleKeys.length]
     ptr2 = ptr1[possibleKeys[i]] or {}
-    j = star + 1
-    while j < path.length
+    for j in [star + 1 ... path.length]
       ptr2 = ptr2[path[j]] or {}
-      j++
     if ptr2 instanceof Array
       result.push possibleKeys[i]  if ptr2.indexOf(searchValue) >= 0
     else
       result.push possibleKeys[i]  if ptr2 is searchValue
-    i++
   res.json result
 
 app.post "/db/snapshot", (req, res, next) ->
