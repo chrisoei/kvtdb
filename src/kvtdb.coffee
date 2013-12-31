@@ -147,7 +147,8 @@ app.delete '/db/del/*', (req, res) ->
   res.send 202
 
 module.exports = {
-    run: ->
-        app.listen 63446
-        console.log 'Listening on port 63446'
+  run: (version) ->
+    programVersion = version
+    app.listen 63446
+    console.log 'Listening on port 63446'
 }

@@ -1,7 +1,7 @@
 {
     "name": "kvtdb",
     "description": "Key-Value Tree Database",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "dependencies": {
         "coffee-script": "1.x",
         "express": "3.x",
