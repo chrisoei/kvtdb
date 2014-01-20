@@ -26,6 +26,6 @@ CMD     [ "kvtdb" ]
 
 # sudo docker build -t chrisoei/kvtdb .
 # sudo docker push chrisoei/kvtdb
-# sudo docker run -d 63446:63446 chrisoei/kvtdb
+# sudo docker run -d -p 63446:63446 chrisoei/kvtdb
 
 # vim: et ft=text sts=8 sw=8 ts=8
