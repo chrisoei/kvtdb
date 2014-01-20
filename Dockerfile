@@ -2,6 +2,7 @@ FROM chrisoei/ubuntu
 
 RUN     apt-get update && \
         apt-get install -y 'nodejs=0.10.24-1chl1~precise1' && \
+        apt-get clean && \
         npm install -g kvtdb
 
 EXPOSE  63446
