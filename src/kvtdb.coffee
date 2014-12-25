@@ -26,7 +26,7 @@ if fs.existsSync('data.json')
   ))
 
 dbVersion = 0
-programVersion = '0.0.4'
+programVersion = '1.0.0'
 
 saveDataStore = ->
   myVersion = ++dbVersion
@@ -149,6 +149,6 @@ app.delete '/db/del/*', (req, res) ->
 module.exports = {
   run: (version) ->
     programVersion = version
-    app.listen 63446
+    app.listen 63446, '127.0.0.1'
     console.log 'Listening on port 63446'
 }
