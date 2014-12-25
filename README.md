@@ -18,6 +18,9 @@ curl -XDELETE http://localhost:63446/db/del/dns/blog.oei.io
 
 # We can search for the key that contains a value
 curl http://localhost:63446/db/search/dns/*/23.239.7.23
+
+# To get a list of keys for a node
+curl http://localhost:63446/db/keys/dns
 ```
 
 </code>
