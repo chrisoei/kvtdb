@@ -21,6 +21,9 @@ curl http://localhost:63446/db/search/dns/*/23.239.7.23
 
 # To get a list of keys for a node
 curl http://localhost:63446/db/keys/dns
+
+# To save a snapshot of the database
+curl -XPOST http://localhost:63446/db/snapshot
 ```
 
 </code>
