@@ -4,6 +4,7 @@ _ = require 'lodash'
 assert = require 'assert'
 child_process = require 'child_process'
 express = require 'express'
+bodyParser = require 'body-parser'
 fs = require 'fs'
 StarDate = require 'stardate'
 
@@ -11,12 +12,12 @@ app = express()
 
 app.disable 'x-powered-by'
 
-app.use express.json(
+app.use bodyParser.json(
   strict: false
   limit: '50mb'
 )
 
-app.use express.urlencoded(limit: '50mb')
+app.use bodyParser.urlencoded(limit: '50mb', extended: false)
 
 dataStore = {}
 
@@ -26,7 +27,7 @@ if fs.existsSync('data.json')
   ))
 
 dbVersion = 0
-programVersion = '1.0.0'
+programVersion = '1.0.1'
 
 saveDataStore = ->
   myVersion = ++dbVersion
