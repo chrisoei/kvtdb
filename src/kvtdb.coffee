@@ -27,7 +27,7 @@ if fs.existsSync('data.json')
   ))
 
 dbVersion = 0
-programVersion = '1.0.1'
+programVersion = ''
 
 saveDataStore = ->
   myVersion = ++dbVersion
@@ -74,7 +74,7 @@ app.get '/db/get/*', (req, res, next) ->
     ]
       res.header h, req.query[h]  if req.query[h]
 
-    res.send 200, result
+    res.status(200).send result
   else
     res.json result
 
@@ -108,7 +108,7 @@ app.post '/db/snapshot', (req, res, next) ->
   sd = new StarDate().canonical()
   console.log 'Snapshotting ' + dbVersion + ' at ' + sd
   fs.writeFile 'data-' + sd + '.json', JSON.stringify(dataStore, null, 2)
-  res.send 202
+  res.sendStatus 202
 
 app.put '/db/set/*', (req, res, next) ->
   ptr = dataStore
@@ -119,7 +119,7 @@ app.put '/db/set/*', (req, res, next) ->
     ptr = ptr[d]
   ptr[last] = req.body
   saveDataStore()
-  res.send 202
+  res.sendStatus 202
 
 app.put '/db/push/*', (req, res, next) ->
   ptr = dataStore
@@ -132,7 +132,7 @@ app.put '/db/push/*', (req, res, next) ->
   ptr[last].push req.body
   ptr[last] = _.uniq(ptr[last])  if req.query.unique
   saveDataStore()
-  res.send 202
+  res.sendStatus 202
 
 app.delete '/db/del/*', (req, res) ->
   ptr = dataStore
@@ -140,12 +140,12 @@ app.delete '/db/del/*', (req, res) ->
   last = path.pop()
   while d = path.shift()
     if typeof ptr[d] isnt 'object'
-      res.send 202
+      res.sendStatus 202
       return
     ptr = ptr[d]
   delete ptr[last]
   saveDataStore()
-  res.send 202
+  res.sendStatus 202
 
 module.exports = {
   run: (version) ->
