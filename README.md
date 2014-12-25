@@ -14,8 +14,7 @@ curl http://localhost:63446/db/get/dns/blog.oei.io
 curl http://localhost:63446/db/get/dns
 
 # We can also delete a node
-curl -XDELETE http://localhost:63446/db/get/dns/blog.oei.io
-
+curl -XDELETE http://localhost:63446/db/del/dns/blog.oei.io
 ```
 
 </code>
