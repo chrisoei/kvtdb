@@ -35,6 +35,10 @@ curl -XPUT \
 # Cache-Control, and Expires headers
 curl -v "http://localhost:63446/db/get/ember.js?Content-Type=application/javascript"
 
+# In addition to map objects, we can also push items onto arrays.
+# Setting unique=true pushes only if the item does not currently exist.
+curl -XPUT -H'Content-Type: text/plain' -dbuild-essential  "http://localhost:63446/db/push/ubuntu/pkgs?unique=true"
+
 ```
 
 </code>
