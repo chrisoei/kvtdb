@@ -2,7 +2,7 @@
 ```bash
 # Set a value:
 curl -XPUT \
-  -H 'Content-Type: application/json' \
+  -H'Content-Type: application/json' \
   -d\"23.239.7.23\" \
   http://localhost:63446/db/set/dns/blog.oei.io
 
@@ -17,7 +17,7 @@ curl http://localhost:63446/db/get/dns
 curl -XDELETE http://localhost:63446/db/del/dns/blog.oei.io
 
 # We can search for the key that contains a value
-curl http://localhost:63446/db/search/dns/*/23.239.7.23
+curl "http://localhost:63446/db/search/dns/*/23.239.7.23"
 
 # To get a list of keys for a node
 curl http://localhost:63446/db/keys/dns
@@ -37,7 +37,10 @@ curl -v "http://localhost:63446/db/get/ember.js?Content-Type=application/javascr
 
 # In addition to map objects, we can also push items onto arrays.
 # Setting unique=true pushes only if the item does not currently exist.
-curl -XPUT -H'Content-Type: text/plain' -dbuild-essential  "http://localhost:63446/db/push/ubuntu/pkgs?unique=true"
+curl -XPUT \
+  -H'Content-Type: text/plain' \
+  -dbuild-essential \
+  "http://localhost:63446/db/push/ubuntu/pkgs?unique=true"
 
 ```
 
