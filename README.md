@@ -24,6 +24,17 @@ curl http://localhost:63446/db/keys/dns
 
 # To save a snapshot of the database
 curl -XPOST http://localhost:63446/db/snapshot
+
+# We can also save UTF-8 data directly into the database:
+curl -XPUT \
+  -H'Content-Type: text/plain' \
+  --data-binary @ember.debug.js \
+  http://localhost:63446/db/set/ember.js
+
+# We can also retrieve UTF-8 data and force the Content-Type,
+# Cache-Control, and Expires headers
+curl -v "http://localhost:63446/db/get/ember.js?Content-Type=application/javascript"
+
 ```
 
 </code>
